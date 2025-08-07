@@ -145,56 +145,51 @@ export const HomePage = () => {
           </button>
         </div>
       </div>
-
-      <div className="mt-10 flex flex-row justify-between w-[75%] m-auto">
-        {data?.length > 0 && (
-          <Sidebar
-            data={data}
-            selectedSeverities={severities}
-            selectedIssueTypes={issueTypes}
-            onSeverityChange={handleFilterSeverities}
-            onIssueTypeChange={handleFilterIssueTypes}
-          />
-        )}
-        <div className="flex flex-col items-center">
-          {loading ? (
-            <Shimmer />
-          ) : (
-            <>
-              {filteredData.length > 0 ? (
-                <>
-                  <div className="mb-4 w-full flex justify-between items-center px-4">
-                    <div className="total-code-smells">
-                      Total <span className="text-[#ff8700]">Code</span> Smells:{" "}
-                      <span className="font-bold">{filteredData.length}</span>
-                      {data.length !== filteredData.length && (
-                        <span className="text-gray-500 text-sm ml-2">
-                          (Filtered from {data.length})
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <IssuePage
-                    issues={paginatedData}
-                    key={`page-${currentPage}-${filteredData.length}`}
-                  />
-                  {filteredData.length > itemsPerPage && (
-                    <Pagination
-                      currentPage={currentPage}
-                      setCurrentPage={handlePageChange}
-                      totalPages={Math.ceil(filteredData.length / itemsPerPage)}
-                    />
-                  )}
-                </>
-              ) : data.length > 0 ? (
-                <div className="text-gray-500">
-                  No results match your filters
-                </div>
-              ) : null}
-            </>
+      {loading ? (
+        <Shimmer />
+      ) : (
+        <div className="mt-10 flex flex-row justify-between w-[900px] m-auto">
+          {data?.length > 0 && (
+            <Sidebar
+              data={data}
+              selectedSeverities={severities}
+              selectedIssueTypes={issueTypes}
+              onSeverityChange={handleFilterSeverities}
+              onIssueTypeChange={handleFilterIssueTypes}
+            />
           )}
+          <div className="flex flex-col items-center">
+            {filteredData.length > 0 ? (
+              <>
+                <div className="mb-4 w-full flex justify-between items-center px-4">
+                  <div className="total-code-smells">
+                    Total <span className="text-[#ff8700]">Code</span> Smells:{" "}
+                    <span className="font-bold">{filteredData.length}</span>
+                    {data.length !== filteredData.length && (
+                      <span className="text-gray-500 text-sm ml-2">
+                        (Filtered from {data.length})
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <IssuePage
+                  issues={paginatedData}
+                  key={`page-${currentPage}-${filteredData.length}`}
+                />
+                {filteredData.length > itemsPerPage && (
+                  <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={handlePageChange}
+                    totalPages={Math.ceil(filteredData.length / itemsPerPage)}
+                  />
+                )}
+              </>
+            ) : data.length > 0 ? (
+              <div className="text-gray-500">No results match your filters</div>
+            ) : null}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
