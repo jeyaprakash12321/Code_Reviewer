@@ -5,6 +5,11 @@ import { IssuePage } from "./IssuePage";
 import { Shimmer } from "../components/Shimmer";
 import { Pagination } from "../components/Pagination";
 
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000"
+    : "https://code-reviewer-y2e2.onrender.com";
+
 export const HomePage = () => {
   const [repoUrl, setRepoUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +28,7 @@ export const HomePage = () => {
       setCurrentPage(1);
 
       const response = await fetch(
-        "http://127.0.0.1:8000/review-repo?repo_url=" +
+        "https://code-reviewer-y2e2.onrender.com/review-repo?repo_url=" +
           encodeURIComponent(repoUrl),
         {
           method: "POST",
